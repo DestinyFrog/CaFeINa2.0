@@ -1,0 +1,7 @@
+.env
+node_modules
+build
+dev.db
+dist
+dev.sqlite3
+.log
