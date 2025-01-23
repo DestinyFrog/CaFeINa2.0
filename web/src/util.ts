@@ -17,3 +17,10 @@ export function generateRandomString(size = 8) {
 export function DegreesToRadians(degrees:number) {
 	return degrees / 180 * Math.PI
 }
+
+export function generateRandomVec2(max_x:number, max_y:number): Vec2 {
+	return {
+		x: Math.floor( Math.random() * max_x ),
+		y: Math.floor( Math.random() * max_y )
+	}
+}
