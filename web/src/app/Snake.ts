@@ -1,3 +1,4 @@
+import './Snake.css'
 import ElementModel from "../../../src/models/elementModel"
 import { API_URL } from "../configuration"
 import { generateRandomVec2, Vec2 } from "../util"
@@ -5,6 +6,8 @@ import App from "../widgets/app"
 import ErrorApp from "../widgets/errorApp"
 
 class Snake extends App {
+	private menu: HTMLDivElement
+	private but_open_controls: HTMLButtonElement
 	private canvas: HTMLCanvasElement
 	private ctx: CanvasRenderingContext2D
 
@@ -32,16 +35,57 @@ class Snake extends App {
 		this.snake_body.push({ x: Math.floor(this.cols / 2), y: Math.floor(this.rows / 2) })
 		this.fruit = generateRandomVec2(this.cols, this.rows)
 
-		const warn = document.createElement('p')
-		warn.textContent = 'Em Breve: versão para celular'
-		this.appendToFooter(warn)
-
 		this.canvas = document.createElement('canvas')
 		this.canvas.width = this.width
 		this.canvas.height = this.height
 		this.appendToContent(this.canvas)
 
+		this.but_open_controls = document.createElement('button')
+		this.but_open_controls.textContent = 'Controles'
+		this.but_open_controls.addEventListener('click', () => this.openMenu())
+		this.appendToFooter(this.but_open_controls)
+
+		this.menu = document.createElement('div')
+		this.menu.className = 'controls'
+		this.appendToContent(this.menu)
+		
+		const up_button = document.createElement('button')
+		up_button.textContent = '🔼'
+		up_button.addEventListener('click', () => {
+			this.snake_dir.x = 0
+			this.snake_dir.y = -1
+		})
+		this.menu.appendChild(up_button)
+
+		const down_button = document.createElement('button')
+		down_button.textContent = '🔽'
+		down_button.addEventListener('click', () => {
+			this.snake_dir.x = 0
+			this.snake_dir.y = 1
+		})
+		this.menu.appendChild(down_button)
+
+		const left_button = document.createElement('button')
+		left_button.textContent = '◀️'
+		left_button.addEventListener('click', () => {
+			this.snake_dir.x = -1
+			this.snake_dir.y = 0
+		})
+		this.menu.appendChild(left_button)
+		
+		const right_button = document.createElement('button')
+		right_button.textContent = '▶️'
+		right_button.addEventListener('click', () => {
+			this.snake_dir.x = 1
+			this.snake_dir.y = 0
+		})
+		this.menu.appendChild(right_button)
+
 		this.ctx = this.canvas.getContext('2d')!
+	}
+
+	private openMenu() {
+		this.menu.style.display = (this.menu.style.display == 'none') ? 'grid' : 'none'
 	}
 
 	private outFunction = (ev: KeyboardEvent) => this.KeyDown(ev)
