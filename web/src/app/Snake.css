@@ -1,6 +1,6 @@
 
 .controls {
-	display: grid;
+	display: none;
 	width: min-content;
 	padding-left: calc(50% - 60px);
 }
